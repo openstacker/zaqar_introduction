@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Introduction to Zaqar - Kiwi Pycon 2015</title>
+
+        <meta name="author" content="Catalyst">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/catalyst.css" id="theme">
+        <link rel="stylesheet" href="css/font-awesome.css">
+
+        <!-- For syntax highlighting -->
+        <!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
+        <link rel="stylesheet" href="lib/css/catalyst-syntax.css">
+
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+        <style>
+            /* Add the ability to omit slides from the printed version (has to be after the print include)*/
+            @media print {
+                .reveal .slides section.no-print {
+                    display: none !important;
+                    visibility: hidden !important;
+                }
+            }
+        </style>
+        <style>
+            .reveal h1, .reveal h2, .reveal h3 {
+                color: #ba2025;
+            }
+        </style>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <!-- Please put any custom styles here -->
+        <style>
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <!-- Cover slide -->
+                <section>
+                    <h1 class="catalyst-logo">Catalyst</h1>
+                    <h3>Intro to OpenStack Zaqar</h3>
+                    <p class="small-text">
+                        Presented by <a href="#">Fei Long Wang</a> (Zaqar Core Developer)
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Who's this guy</h3>
+                    <ul>
+                        <li>Very proud as catalyst between open source and customer</li>
+                        <li>OpenStack <a href="#">Zaqar</a> core developer</li>
+                        <li>OpenStack <a href="#">Glance</a> core developer</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Agenda</h3>
+                    <ul>
+                        <li>What it is not</li>
+                        <li>What it is</li>
+                        <li>Architecture</li>
+                        <li>REST API</li>
+                        <li>User case</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>It's not a replacement of</h3>
+                    <ul>
+                        <li>RabbitMQ</li>
+                        <li>QPID</li>
+                        <li>ZeroMQ</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Not a queue service</h3>
+                    <ul>
+                        <li>WHAT???</li>
+                        <li>YES, it's true</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>It's not a mail service</h3>
+                </section>
+
+                <section>
+                    <h3>It's a messaging service</h3>
+                    <ul>
+                        <li>Request/Response</li>
+                        <li>Publish/Subscription</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>What's Zaqar?</h3>
+                    <p>Multi-tenant messaging system with support for multi backends and protocols</p>
+                </section>
+
+                <section>
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Notifications</li>
+                        <li>Horizontally Scalable</li>
+                        <li>Messages Delivery Guaranteed*</li>
+                        <li>Operation Friendly /ping and /health</li>
+                    </ul>
+                </section>
+
+                <!-- Large image slide -->
+                <section class="image-slide">
+                    <h2>Achitecture</h2>
+                    <img src="img/arch.png" alt="">
+                </section>
+
+                <section>
+                    <h3>Architecture</h3>
+                    <ul>
+                        <li>Transport</li>
+                        <li>Storage</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Transport</h3>
+                    <ul>
+                        <li>HTTP</li>
+                        <li>Websocket</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Storage</h3>
+                    <ul>
+                        <li>MongoDB</li>
+                        <li>Redis</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>REST API</h3>
+                    <ul>
+                        <li>Public API</li>
+                        <li>Private API</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Public API</h3>
+                    <ul>
+                        <li>Messages</li>
+                            <ul>
+                                <li>GET /v2/queues/{queue_name}/messages{?ids}</li>
+                                <li>POST /v2/queues/{queue_name}/messages</li>
+                                <li>DELETE /v2/queues/{queue_name}/messages{?ids}</li>
+                            </ul>
+                        <li>Subscriptions</li>
+                            <ul>
+                                <li>GET /v2/queues/{queue_name}/Subscriptions</li>
+                                <li>POST /v2/queues/{queue_name}/Subscriptions</li>
+                                <li>DELETE /v2/queues/{queue_name}/Subscriptions/{subscription_id}</li>
+                            </ul>
+                        <li>Claims</li>
+                            <ul>
+                                <li>POST /v1.1/queues/{queue_name}/claims</li>
+                                <li>GET /v1.1/queues/{queue_name}/claims/{claim_id}</li>
+                                <li>PATCH /v1.1/queues/{queue_name}/claims/{claim_id}</li>
+                                <li>DELETE /v1.1/queues/{queue_name}/claims/{claim_id}</li>
+                            </ul>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Private API</h3>
+                    <ul>
+                        <li>Pools</li>
+                            <ul>
+                                <li>PUT /v2/pools/{pool_name}</li>
+                                <li>GET /v2/pools/{pool_name}</li>
+                                <li>PATCH /v2/pools/{pool_name}</li>
+                                <li>DELETE /v2/pools/{pool_name}</li>
+                                <li>GET /v2/pools</li>
+                            </ul>
+                        <li>Flavors</li>
+                            <ul>
+                                <li>PUT /v2/flavors/{flavor_name}</li>
+                                <li>GET /v2/flavors/{flavor_name}</li>
+                                <li>PATCH /v2/flavors/{flavor_name}</li>
+                                <li>DELETE /v2/flavors/{flavor_name}</li>
+                                <li>GET /v2/flavors</li>
+                            </ul>
+                        <li>Health</li>
+                            <ul>
+                                <li>GET /v2/health</li>
+                            </ul>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Operation API</h3>
+                    <ul>
+                        <li>GET /v2/ping</li>
+                        <li>GET /v2/health</li>    
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>User Cases</h3>
+                    <ul>
+                        <li>Messaging service</li>
+                        <li>Inter cloud</li>
+                        <li>Notifications</li>
+                        <li>User facing</li> 
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Thanks You</h3>
+                    <p>Questions?</p>
+                </section>
+            </div>
+
+            <div class="footer">
+                <div class="scarf">
+                    <div class="scarf-orange"></div>
+                    <div class="scarf-yellow"></div>
+                    <div class="scarf-blue"></div>
+                    <div class="scarf-green"></div>
+                </div>
+                <div class="footer-inner">
+                    <div>
+                        <!-- NOTE: use only one of these. open-source-technologists is the standard -->
+                        <p class="open-source-technologists">open source technologists</p>
+                        <!-- <p class="freedom-to-innovate">freedom to innovate</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Parallax scrolling
+                // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+                // parallaxBackgroundSize: '2100px 900px',
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

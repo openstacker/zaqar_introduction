@@ -70,7 +70,7 @@
                     <p class="small-text">
                         Presented by <a href="#">Fei Long Wang</a> (Zaqar Core Developer)
                     </p>
-                </section>
+                </section data-transition="slide-in fade-out">
 
                 <section>
                     <h3>Who's this guy</h3>
@@ -78,6 +78,24 @@
                         <li>Very proud as catalyst between open source and customer</li>
                         <li>OpenStack <a href="#">Zaqar</a> core developer</li>
                         <li>OpenStack <a href="#">Glance</a> core developer</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Why am I here?</h3>
+                    <ul>
+                        <li>I like sharing</li>
+                        <li>Zaqar is good</li>
+                        <li>I like sharing good stuff</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Why are you here?</h3>
+                    <ul>
+                        <li class="fragment" data-fragment-index="1">You are a developer</li>
+                        <li class="fragment" data-fragment-index="2">You are an operator/advocate</li>
+                        <li class="fragment" data-fragment-index="3">You are lost</li>
                     </ul>
                 </section>
 
@@ -133,10 +151,11 @@
                         <li>Horizontally Scalable</li>
                         <li>Messages Delivery Guaranteed*</li>
                         <li>Operation Friendly /ping and /health</li>
+                        <li>Puppet support</li>
                     </ul>
+                    <p style="text-align:right"><span style="font-size: 50%">*Depends on storage backend</span></p>
                 </section>
 
-                <!-- Large image slide -->
                 <section class="image-slide">
                     <h2>Achitecture</h2>
                     <img src="img/arch.png" alt="">
@@ -170,7 +189,8 @@
                     <h3>REST API</h3>
                     <ul>
                         <li>Public API</li>
-                        <li>Private API</li>
+                        <li>Admin API</li>
+                        <li>Operation API</li>
                     </ul>
                 </section>
 
@@ -185,22 +205,37 @@
                             </ul>
                         <li>Subscriptions</li>
                             <ul>
-                                <li>GET /v2/queues/{queue_name}/Subscriptions</li>
-                                <li>POST /v2/queues/{queue_name}/Subscriptions</li>
-                                <li>DELETE /v2/queues/{queue_name}/Subscriptions/{subscription_id}</li>
-                            </ul>
-                        <li>Claims</li>
-                            <ul>
-                                <li>POST /v1.1/queues/{queue_name}/claims</li>
-                                <li>GET /v1.1/queues/{queue_name}/claims/{claim_id}</li>
-                                <li>PATCH /v1.1/queues/{queue_name}/claims/{claim_id}</li>
-                                <li>DELETE /v1.1/queues/{queue_name}/claims/{claim_id}</li>
+                                <li>GET /v2/queues/{queue_name}/subscriptions</li>
+                                <li>POST /v2/queues/{queue_name}/subscriptions</li>
+                                <li>DELETE /v2/queues/{queue_name}/subscriptions/{subscription_id}</li>
+                                <li>GET /v2/queues/{queue_name}/subscriptions/{subscription_id}</li>
                             </ul>
                     </ul>
                 </section>
 
                 <section>
-                    <h3>Private API</h3>
+                    <h3>Public API</h3>
+                    <ul>
+                        <li>Claims</li>
+                            <ul>
+                                <li>POST /v2/queues/{queue_name}/claims</li>
+                                <li>GET /v2/queues/{queue_name}/claims/{claim_id}</li>
+                                <li>PATCH /v2/queues/{queue_name}/claims/{claim_id}</li>
+                                <li>DELETE /v2/queues/{queue_name}/claims/{claim_id}</li>
+                            </ul>
+                        <li>Queues</li>
+                            <ul>
+                                <li>PUT /v2/queues/{queue_name}</li>
+                                <li>GET /v2/queues/{queue_name}</li>
+                                <li>PATCH /v2/queues/{queue_name}</li>
+                                <li>DELETE /v2/queues/{queue_name}</li>
+                                <li>GET /v2/queues</li>
+                            </ul>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Admin API</h3>
                     <ul>
                         <li>Pools</li>
                             <ul>
@@ -218,10 +253,6 @@
                                 <li>DELETE /v2/flavors/{flavor_name}</li>
                                 <li>GET /v2/flavors</li>
                             </ul>
-                        <li>Health</li>
-                            <ul>
-                                <li>GET /v2/health</li>
-                            </ul>
                     </ul>
                 </section>
 
@@ -234,17 +265,122 @@
                 </section>
 
                 <section>
+                    <h3>Response of /v2/health</h3>
+                    <pre><code data-trim contenteditable>
+{
+    "pool_redis": {
+        "storage_reachable": true,
+        "operation_status": {
+            "post_messages": {
+                "seconds": 0.01154017448425293,
+                "ref": null,
+                "succeeded": true
+            },
+            "delete_messages": {
+                "seconds": 0.0011119842529296875,
+                "ref": null,
+                "succeeded": true
+            },
+            "delete_queue": {
+                "seconds": 0.004442930221557617,
+                "ref": null,
+                "succeeded": true
+            },
+            "bulk_delete_messages": {
+                "seconds": 0.01665186882019043,
+                "ref": null,
+                "succeeded": true
+            },
+            "create_queue": {
+                "seconds": 0.005011081695556641,
+                "ref": null,
+                "succeeded": true
+            },
+            "list_messages": {
+                "seconds": 0.000015020370483398438,
+                "ref": null,
+                "succeeded": true
+            },
+            "delete_claim": {
+                "seconds": 0.0003638267517089844,
+                "ref": null,
+                "succeeded": true
+            },
+            "claim_messages": {
+                "seconds": 0.001798868179321289,
+                "ref": null,
+                "succeeded": true
+            }
+        }
+    },
+    "pool_mongo": {
+        "message_volume": {
+            "claimed": 0,
+            "total": 0,
+            "free": 0
+        },
+        "storage_reachable": true,
+        "operation_status": {
+            "post_messages": {
+                "seconds": 0.46550703048706055,
+                "ref": null,
+                "succeeded": true
+            },
+            "delete_messages": {
+                "seconds": 0.0003559589385986328,
+                "ref": null,
+                "succeeded": true
+            },
+            "delete_queue": {
+                "seconds": 0.00894784927368164,
+                "ref": null,
+                "succeeded": true
+            },
+            "bulk_delete_messages": {
+                "seconds": 0.00034999847412109375,
+                "ref": null,
+                "succeeded": true
+            },
+            "create_queue": {
+                "seconds": 0.012331962585449219,
+                "ref": null,
+                "succeeded": true
+            },
+            "list_messages": {
+                "seconds": 0.00000286102294921875,
+                "ref": null,
+                "succeeded": true
+            },
+            "delete_claim": {
+                "seconds": 0.00027108192443847656,
+                "ref": null,
+                "succeeded": true
+            },
+            "claim_messages": {
+                "seconds": 0.0051059722900390625,
+                "ref": null,
+                "succeeded": true
+            }
+        }
+    },
+    "catalog_reachable": true
+}
+
+                    </code></pre>
+                </section>
+
+                <section>
                     <h3>User Cases</h3>
                     <ul>
                         <li>Messaging service</li>
-                        <li>Inter cloud</li>
                         <li>Notifications</li>
+                        <li>Inter cloud</li>                        
                         <li>User facing</li> 
                     </ul>
                 </section>
 
                 <section>
-                    <h3>Thanks You</h3>
+                    <h3>Thank You</h3>
                     <p>Questions?</p>
                 </section>
             </div>

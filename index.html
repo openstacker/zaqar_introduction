@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/catalyst.css" id="theme">
         <link rel="stylesheet" href="css/font-awesome.css">
-
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <!-- For syntax highlighting -->
         <!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
         <link rel="stylesheet" href="lib/css/catalyst-syntax.css">
@@ -72,6 +72,10 @@
                     </p>
                 </section data-transition="slide-in fade-out">
 
+                <section data-background="img/fathers_day.jpg">
+                    <h2 style="color:#FFF">Happy Father's Day 2015!</h2>
+                </section>
+                
                 <section>
                     <h3>Who's this guy</h3>
                     <ul>
@@ -84,9 +88,9 @@
                 <section>
                     <h3>Why am I here?</h3>
                     <ul>
-                        <li>I like sharing</li>
-                        <li>Zaqar is good</li>
-                        <li>I like sharing good stuff</li>
+                        <li class="fragment" data-fragment-index="1">I like sharing</li>
+                        <li class="fragment" data-fragment-index="2">Zaqar is good</li>
+                        <li class="fragment" data-fragment-index="3">I like sharing good stuff</li>
                     </ul>
                 </section>
 
@@ -104,9 +108,18 @@
                     <ul>
                         <li>What it is not</li>
                         <li>What it is</li>
+                        <li>Why Zaqar?</li>
                         <li>Architecture</li>
                         <li>REST API</li>
                         <li>User case</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>What's in a name?</h3>
+                    <ul>
+                        <li><a href="#">Zaqar</a> - In Mesopotamian mythology, Zaqar is the messenger of the god Sin. He relays these messages to mortals through his power over their dreams and nightmares</li>
+                        <li><a href="#">Marconi</a>(former name) - Guglielmo Marconi, an Italian inventor often credited with the invention of radio</li>
                     </ul>
                 </section>
 
@@ -145,19 +158,43 @@
                 </section>
 
                 <section>
+                    <h3>Why Zaqar?</h3>
+                    <img class="fragment img-circle" data-fragment-index="1" src="img/new_wheel.gif" alt="" border="1px">
+                    <p class="fragment" data-fragment-index="1">WHAT!!! You guys are creating a new wheel?</p>
+                </section>
+
+                <section>
+                    <h3>Why Zaqar?</h3>
+                    <ul>
+                        <li>Open Source</li>
+                        <li>Easy to user</li>
+                        <li>Scalable</li>
+                        <li>Extensible</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Why Zaqar instead of ...?</h3>
+                    <ul>
+                        <li>SQS - SQS is not open sourced. You can't build your own instance.</li>
+                        <li>RabbitMQ/QPID/ZeroMQ - You have to handle HA, scaling, deployment, maintaince, etc</li>
+                    </ul>
+                    <p><a href="http://stevemilner.org/2013/12/14/cloud-message-queues/" target="_blank">Cloud message queue comparison</a></p>
+                </section>
+
+                <section>
                     <h3>Features</h3>
                     <ul>
-                        <li>Notifications</li>
                         <li>Horizontally Scalable</li>
                         <li>Messages Delivery Guaranteed*</li>
+                        <li>Notifications</li>
                         <li>Operation Friendly /ping and /health</li>
-                        <li>Puppet support</li>
                     </ul>
                     <p style="text-align:right"><span style="font-size: 50%">*Depends on storage backend</span></p>
                 </section>
 
                 <section class="image-slide">
-                    <h2>Achitecture</h2>
+                    <h3>Achitecture</h3>
                     <img src="img/arch.png" alt="">
                 </section>
 
@@ -378,9 +415,14 @@
                         <li>User facing</li> 
                     </ul>
                 </section>
+                
+                <section data-background="img/live_demo.jpg">
+                    <h2 style="color:#FFF">Live Demo</h2>
+                </section>
 
                 <section>
                     <h3>Thank You</h3>
+                    <p>https://github.com/openstack/zaqar</p>
                     <p>Questions?</p>
                 </section>
             </div>
